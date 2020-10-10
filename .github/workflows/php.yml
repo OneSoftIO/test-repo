@@ -1,26 +1,18 @@
-name: PHP Composer
-
+name: CI -> Deploy to My website
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+    branches: [ master, Development ]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: FTP Deployer
-        uses: sand4rt/ftp-deployer@v1.1
+      - uses: actions/checkout@v2
+      # Here is the deployment action
+      - name: Upload from public_html via FTP
+        uses: airvzxf/ftp-deployment-action@latest
         with:
-          host: ${{ secrets.FTP_HOST }}
-          port: 21 # optional
-          username: ${{ secrets.FTP_USERNAME }}
+          server: ${{ secrets.FTP_HOST }}
+          user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          remote_folder: ${{ secrets.FTP_REMOTE_FOLDER }} # optional
-#          local_folder: ./
-          cleanup: false # optional
-          include: '' # optional
-          exclude: ''
-          pasive: true # optional
+          local_dir: "./public_html"
+          delete: "false"
