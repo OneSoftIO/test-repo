@@ -1,5 +1,11 @@
-on: push
-name: Publish Website
+name: PHP Composer
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
